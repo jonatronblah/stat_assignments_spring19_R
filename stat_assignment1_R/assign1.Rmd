@@ -1,0 +1,57 @@
+---
+title: "Stat Spring 2019 Assignment 1"
+author: "Jonathan Scheer"
+date: "January 13, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+candyBars <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/assignment 1 - PCA/data/CandyBars.txt')
+library(corrplot)
+```
+
+# Part 1
+
+1. Consider all of the numeric variables (i.e. all of the variables except Brand and Name):
+Determine the variance/covariance matrix and the correlation matrix of these variables.
+Interpret briefly what you see. 
+2. Construct a scatterplot matrix of the variables specified in #1. Comment on what you
+observe.
+3. Construct a color map on correlations for the variables specified in #1. Comment on what
+you observe. 
+
+
+```{r co-matrix}
+#subset numeric variables
+candyBars_sub <- candyBars %>% 
+  select_if(is.numeric)
+#Get co/variance matrix
+candyBars_cov <- cov(candyBars_sub)
+candyBars_cov
+#Scatterplot matrix of covariance
+pairs(~., data=candyBars_cov)
+
+#Get correlation matrix
+candyBars_corr <- cor(candyBars_sub)
+candyBars_corr
+#correlation matrix by color
+corrplot(candyBars_corr, method='color')
+#Probability plot
+candyBars_mtx <- as.matrix(candyBars_sub)
+candyBars_centroid <- colMeans(candyBars_mtx)
+n <- nrow(candyBars_mtx) 
+p <- ncol(candyBars_mtx)
+cov <- cov(candyBars_mtx)
+distances <- mahalanobis(candyBars_mtx, candyBars_centroid, cov)
+qqplot(qchisq(ppoints(n),df=p),distances,
+       main="QQ Plot Assessing Multivariate Normality",
+       ylab="Mahalanobis D2")
+abline(a=0,b=1)
+#to do: try adding ggplot with more detail/better formatting!
+
+```
+
+
+4. 

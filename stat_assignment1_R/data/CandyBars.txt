@@ -1,0 +1,76 @@
+Brand,Name,Oz/pkg,Calories,Total fat g,Saturated fat g,Cholesterol g,Sodium mg,Carbohydrate g,Dietary fiber g,Sugars g,Protein g,Vitamin A %RDI,Vitamin C %RDI,Calcium %RDI,Iron %RDI
+M&M/Mars,Snickers Peanut Butter,2,310,20,7,5,150,28,1,23,6,0,0,6,2
+Hershey,Cookies 'n' Mint,1.55,230,12,6,10,80,27,1,21,4,0,0,8,4
+Hershey,Cadbury Dairy Milk,5,220,12,8,10,45,24,1,21,3,0,0,10,2
+M&M/Mars,Snickers,3.7,170,8,3,5,85,21,1,17,3,0,0,2,0
+Charms,Sugar Daddy,1.7,200,2.5,2.5,2,100,43,0,28,1,0,0,4,0
+M&M/Mars,Twix Peanut Butter,1.71,260,16,5,5,130,26,2,17,5,0,0,2,2
+Hershey,Twizzler,2.2,190,1.5,0,0,150,42,0,24,2,0,0,0,2
+Tobler,Toblerone,1.23,190,11,7,5,25,21,0,19,2,0,0,6,0
+Nestle,Crunch,1.55,230,12,7,5,60,28,1,23,3,0,0,8,0
+Hershey,Almond Joy,3.22,230,13,8,2,85,25,3,17,2,0,0,2,2
+Sherwood,Elana Mint,1.6,200,10,6,15,10,29,2,26,2,0,0,2,7
+Hershey,Krackel,2.6,390,21,13,10,110,45,1,35,5,0,0,10,2
+M&M/Mars,M&Ms Peanut,1.74,250,13,5,5,25,30,2,25,5,0,0,4,2
+Bit-O-Honey,Bit-O-Honey,1.7,200,4,2.5,0,105,41,0,20,1,0,0,2,2
+Nestle,100 Grand,1.5,200,8,5,10,75,30,0,27,2,0,0,4,0
+Hershey,Skor,1.4,220,13,9,20,110,23,0,21,2,0,0,4,0
+Hershey,Twix Caramel,2,280,14,5,5,115,37,0,27,3,0,0,4,2
+M&M/Mars,Milky Way Lite,1.57,160,5,3.5,0,100,33,0,23,2,0,0,4,0
+M&M/Mars,Mars,1.76,240,13,4,5,70,31,1,26,3,0,0,6,2
+Pearson,Peanut Nut Roll,2.5,340,16,3,0,210,40,2,29,9,0,0,4,2
+Nestle,Raisinet,1.58,200,8,4,3,15,31,2,28,2,0,0,4,2
+Sherwood,Elana Mocca,1.6,230,13,7,20,35,27,1,26,3,0,0,6,6
+Hershey,Bar None,1.65,250,15,9,5,55,25,1,18,4,0,0,4,2
+Brown & Haley,Almond Roca,1.6,270,19,11,20,160,25,0,23,2,6,0,2,2
+Leaf,Payday,1.85,240,12,2,0,170,28,1,16,7,0,0,4,4
+Just Born,Super Hot Tamales,2.12,220,0,0,0,25,55,0,34,0,0,0,0,0
+Hershey,Rolo,1.91,260,12,8,10,95,35,0,30,2,0,0,6,0
+Nestle,Butterfinger,2.1,280,11,6,0,120,41,1,40,4,0,0,0,2
+Myerson,Big Cherry,1.75,230,10,5,0,36,31,1,1,4,1,1,2,7
+Hershey,Mr. Goodbar,2.6,420,27,12,10,35,34,3,28,9,0,0,8,4
+Hershey,Golden Collection,2.8,450,29,12,10,45,37,3,29,9,0,0,15,10
+Annabelle,U-No (Green),1.5,250,17,11,4,45,22,1,20,3,0,0,5,5
+Hershey,Reese's Peanut Butter Cup,1.6,240,14,6,2,150,24,1,19,5,0,0,2,2
+M&M/Mars,Skittles,2.17,250,2.5,0.5,0,10,56,0,47,0,0,0,0,0
+Hershey,Reese's Peanut Butter Cup Crunchy,1.6,250,16,6,3,75,21,2,16,6,0,0,4,2
+Adams & Brooks,Cup O Gold,1.25,160,8,4.5,3,10,23,0,19,1,0,0,2,0
+Nestle,Baby Ruth,2.1,280,12,7,0,135,38,2,25,4,0,0,2,0
+Weider,Tiger Milk,1.25,160,6,1,0,90,20,0,16,6,15,10,15,15
+M&M/Mars,Dove,6,230,13,8,10,30,25,1,24,3,2,0,6,0
+Hershey,York Peppermint Patty,1.5,170,4,2.5,0,15,33,0,23,1,0,0,0,4
+M&M/Mars,3 Musketeers,2.13,260,8,4,5,110,46,1,40,2,0,0,2,2
+Annabelle,U-No (Blue),1.5,250,17,11,4,45,22,1,20,3,0,0,5,5
+Tootsie,Jr Mints,1.6,190,4,2.5,0,10,38,0,37,0,0,0,0,4
+Hershey,Symphony (Blue),1.5,240,15,8,10,60,22,1,19,4,0,0,8,2
+Hershey,KitKat,2.8,410,22,15,10,65,48,1,33,5,0,0,10,2
+Leaf,Whoppers,1.75,230,10,8,0,130,36,1,28,2,0,0,8,2
+Hershey,5th Avenue,2,280,12,5,2,95,38,1,26,5,0,0,4,4
+Tootsie,Charleston Chew,1.875,230,7,6,0,50,40,1,30,2,0,0,4,2
+Hershey,Kisses Almond,6,210,13,7,5,25,19,1,17,4,0,0,8,4
+Hershey,Mound,1.9,250,13,11,0,80,31,3,21,2,0,0,0,6
+Weider,Tiger Sport,1.2,125,2,0.5,0,55,21,2,11,6,6,50,20,15
+Standard,Peanut Butter GooGoo,1.74,262,16,5,0,164,24,0,19,7,0,0,2,4
+Hershey,Cadbury Roast Almond,5,220,13,7,10,80,21,1,18,4,0,0,10,2
+M&M/Mars,Milky Way Dark,1.77,220,8,4,5,85,36,1,30,1,0,0,2,2
+M&M/Mars,M&Ms Almond,1.31,200,11,3.5,5,15,21,2,18,3,0,0,4,2
+Nabisco,Planters Original Peanut Bar,1.6,230,14,1.5,0,70,22,2,13,6,0,0,2,4
+M&M/Mars,Snickers Munch,1.42,230,15,3.5,10,150,17,2,12,6,2,0,2,2
+Hershey,Milk Chocolate,1.55,230,13,9,10,40,25,1,22,3,0,0,8,2
+M&M/Mars,Milky Way,2.15,280,11,5,5,90,43,1,37,2,0,0,6,0
+Annabelle,Look!,1.5,190,6,4,0,90,33,1,17,2,0,0,0,5
+M&M/Mars,M&Ms Plain,1.69,230,10,6,10,35,34,1,31,2,0,0,4,2
+Hershey,Cadbury Fruit & Nut,5,210,11,6,5,45,24,1,21,3,0,0,8,2
+Annabelle,Abba-Zabba,2,250,5,4,0,85,48,1,23,2,0,0,0,0
+Hershey,Kisses,6,210,12,8,10,35,23,1,20,3,0,0,8,2
+M&M/Mars,Whatchamacallit,1.7,250,13,10,5,125,29,1,19,4,0,0,4,0
+Hershey,Symphony (Red),1.5,230,14,9,10,40,24,0,21,3,0,0,10,2
+Hershey,Special Dark,2.6,410,24,15,0,5,44,4,34,4,0,0,2,10
+M&M/Mars,M&Ms Peanut Butter,1.63,240,13,8,5,95,27,2,22,5,0,0,4,2
+Hershey,Reese's Pieces,1.63,230,10,8,0,75,28,1,24,6,0,0,4,2
+Nestle,Chunky,1.4,200,11,6,3,20,22,2,20,3,0,0,6,2
+Hershey,Cadbury Caramello,5,190,9,6,10,55,25,0,19,2,0,0,8,2
+Hershey,Milk Chocolate Almond,2.6,410,25,12,15,55,38,2,31,8,0,0,15,6
+Hershey,Reese's Nutrageous,1.6,240,14,4.5,3,85,22,1,18,7,0,0,2,2
+Leaf,Heath,2.8,210,13,7,20,180,25,0,24,2,6,0,4,2
+Annabelle,Big Hunk,2,230,3,0.5,0,150,47,1,23,3,0,0,0,6
