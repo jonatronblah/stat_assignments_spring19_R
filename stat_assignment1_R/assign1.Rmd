@@ -8,7 +8,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-candyBars <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/assignment 1 - PCA/data/CandyBars.txt')
+candyBars <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment1_R/data/CandyBars.txt')
 library(corrplot)
 ```
 
@@ -21,6 +21,8 @@ Interpret briefly what you see.
 observe.
 3. Construct a color map on correlations for the variables specified in #1. Comment on what
 you observe. 
+4. Use a probability plot to assess the multivariate normality of the variables specified in #1.
+Interpret. 
 
 
 ```{r co-matrix}
@@ -53,5 +55,25 @@ abline(a=0,b=1)
 
 ```
 
+# Part II
 
-4. 
+Reconsider the candy bar data. Perform a Principal Component Analysis on this data by carrying out
+the following steps:
+a) i) Find and display the eigenvalues of the correlation matrix. Use these along with a Scree plot (and/or
+other means) to determine the number of principal components that are to be retained. How much of the
+variation in the data is explained by your chosen number of principal components? Remember that your
+goal is dimension reduction…so please be sensible in your choice of number of components. 
+
+```{r scree}
+#by Eigenvalues
+candyBarsEV <- eigen(candyBars_corr)
+summary(candyBarsEV$values)
+plot(candyBarsEV$values, type='l')
+
+#by variance
+candyPCA <- prcomp(candyBars_sub, scale=TRUE)
+summary(candyPCA)
+plot(candyPCA, type='l')
+```
+
+
