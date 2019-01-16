@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 candyBars <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment1_R/data/CandyBars.txt')
 library(corrplot)
+library(ggplot2)
 ```
 
 # Part 1
@@ -64,7 +65,7 @@ other means) to determine the number of principal components that are to be reta
 variation in the data is explained by your chosen number of principal components? Remember that your
 goal is dimension reduction…so please be sensible in your choice of number of components. 
 
-```{r scree}
+```{r pca corr}
 #by Eigenvalues
 candyBarsEV <- eigen(candyBars_corr)
 summary(candyBarsEV$values)
@@ -74,6 +75,36 @@ plot(candyBarsEV$values, type='l')
 candyPCA <- prcomp(candyBars_sub, scale=TRUE)
 summary(candyPCA)
 plot(candyPCA, type='l')
+
+#loadings
+candyLoadings <- candyPCA$rotation
+candyLoadings
+
+#biplot
+candyBar_scores <- as.data.frame(candyPCA$x)
+p <- ggplot(data=candyBar_scores, aes(x=PC1, y=PC2,colour=candyBars$Brand)) 
+p + geom_hline(yintercept=0) + geom_vline(xintercept=0) + geom_point()
+```
+
+```{r pca cov}
+#by Eigenvalues
+candyBarsEV <- eigen(candyBars_cov)
+summary(candyBarsEV$values)
+plot(candyBarsEV$values, type='l')
+
+#by variance
+candyPCA_cov <- prcomp(candyBars_sub, scale=FALSE)
+summary(candyPCA_cov)
+plot(candyPCA_cov, type='l')
+
+#loadings
+candyLoadings <- candyPCA_cov$rotation
+candyLoadings
+
+#biplot
+candyBar_cov_scores <- as.data.frame(candyPCA_cov$x)
+p <- ggplot(data=candyBar_cov_scores, aes(x=PC1, y=PC2,colour=candyBars$Brand)) 
+p + geom_hline(yintercept=0) + geom_vline(xintercept=0) + geom_point()
 ```
 
 
