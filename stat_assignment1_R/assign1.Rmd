@@ -32,13 +32,13 @@ candyBars_sub <- candyBars %>%
   select_if(is.numeric)
 #Get co/variance matrix
 candyBars_cov <- cov(candyBars_sub)
-candyBars_cov
-#Scatterplot matrix of covariance
-pairs(~., data=candyBars_cov)
-
+knitr::kable(candyBars_cov, digits=2)
 #Get correlation matrix
 candyBars_corr <- cor(candyBars_sub)
-candyBars_corr
+knitr::kable(candyBars_corr, digits=2)
+#Scatterplot matrix of covariance and correlation
+pairs(~., data=candyBars_cov)
+pairs(~., data=candyBars_corr)
 #correlation matrix by color
 corrplot(candyBars_corr, method='color')
 #Probability plot
@@ -56,6 +56,15 @@ abline(a=0,b=1)
 
 ```
 
+The covariance matrix is not especially useful for cursory analysis as the variables involve different scales with a high spread - for example, the measurements of calories and %RDI of various nutrients are not easily comparible numerically as shown. 
+The correlation matrix provides a better view of the relationships between variables. The relationship between calories and several other measurements such as Total fat, sugars and proteins is a relatively high positive correlation, which makes sense. The somewhat weaker, negative correlations between %RDI of various nutrients and the caloric-related measurements is less clear but worth noting.
+
+The scatterplots of the above matrices reinforce the cursory analysis of the data. The covariance scatterplot matrix is not particularly useful, failing to clearly identify the relationships between variables. The relationships are clearer in the correlation scatterplot matrix. We can identify several variables which tend to contain outliers in their relationships with other variables.
+
+The correlation color plot offers the clearest view of the relationships between variables. From this plot we can easily identify significant clusters of positively-correlated variables: Calories, fats, sugars and proteins. We can also see that the nutrients are generally positively correlated with each other, and weakly negatively correlated to the sugar/fat clusters.
+
+The multivariate normality is questionable and clear outliers are present. This is reflected in the high spread of the correlation matrix for this dataset. 
+
 # Part II
 
 Reconsider the candy bar data. Perform a Principal Component Analysis on this data by carrying out
@@ -64,6 +73,13 @@ a) i) Find and display the eigenvalues of the correlation matrix. Use these alon
 other means) to determine the number of principal components that are to be retained. How much of the
 variation in the data is explained by your chosen number of principal components? Remember that your
 goal is dimension reduction…so please be sensible in your choice of number of components. 
+ii) Provide the loadings matrix. What do you learn from this matrix? Using this matrix, and as best as
+possible, interpret the first two principal components (I will expect some interpretation).
+iii) Construct a biplot of the loadings and scores for the first two principal components. For this plot, color
+the observations based on Brand. Are there any natural groupings of the observations? Are there any
+unusual observations?
+b) Show how the results change if PCA were performed on the covariance matrix instead of the correlation
+matrix. What do you learn from this?
 
 ```{r pca corr}
 #by Eigenvalues
@@ -78,13 +94,22 @@ plot(candyPCA, type='l')
 
 #loadings
 candyLoadings <- candyPCA$rotation
-candyLoadings
+knitr::kable(candyLoadings, digits=2)
 
 #biplot
 candyBar_scores <- as.data.frame(candyPCA$x)
 p <- ggplot(data=candyBar_scores, aes(x=PC1, y=PC2,colour=candyBars$Brand)) 
 p + geom_hline(yintercept=0) + geom_vline(xintercept=0) + geom_point()
 ```
+
+The PCA of this dataset unfortunately does not provide an extensive explanation of variance in a small number of components. The first PC explains only 26% of the variance, and the cumulative variance does not reach 90% until the seventh component. For this dataset, I would include the first four components, describing roughly 70% of the variance.
+
+From the loadings matrix, we can see that the first PC is primarily concerned with the cluster of fat/calorie measures identified above in the correlation plot. The component associates these measures with protein, dietary fiber and, interestingly enough calcium %RDI as well.
+The second component appears to describe the negative relationship between the fat/calorie variables and the nutrient composition - again something which was apparent in the correlation plot.
+
+Hershey represents an interesting category in the biplot - while much of the Hershey datapoints are clustered around the general origin of both PCs, we can clearly see a string of Hershey datapoints extended outwards positively along the PC1 axis, suggesting their influence in the first component's composition.
+
+Weider has a couple points extentende far negatively along the second component's axis. After a Google search, this made more sense to me - Weider produces protein/energy bars - not exactly a fair comparison to the other brands - and the second component is primarily a composite of the negative relationship nutrient composition has to calories, fats etc.
 
 ```{r pca cov}
 #by Eigenvalues
@@ -99,7 +124,7 @@ plot(candyPCA_cov, type='l')
 
 #loadings
 candyLoadings <- candyPCA_cov$rotation
-candyLoadings
+knitr::kable(candyLoadings, digits=2)
 
 #biplot
 candyBar_cov_scores <- as.data.frame(candyPCA_cov$x)
@@ -107,4 +132,4 @@ p <- ggplot(data=candyBar_cov_scores, aes(x=PC1, y=PC2,colour=candyBars$Brand))
 p + geom_hline(yintercept=0) + geom_vline(xintercept=0) + geom_point()
 ```
 
-
+While the unscaled PCA provides components which appear to describe more variance, their composition makes the usefulness of such an analysis questionable - for example, the first component describes a very strong relationship between calories and total fat, but almost nothing else (positive or negative). The second component is even less usefull - a very high figure for sodium, and extremely weak or even nonexistent relationships to all other variables.
