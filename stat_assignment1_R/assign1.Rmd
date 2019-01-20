@@ -7,10 +7,13 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
 library(tidyverse)
 candyBars <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment1_R/data/CandyBars.txt')
 library(corrplot)
 library(ggplot2)
+library(ggbiplot)
+library(kableExtra)
 ```
 
 # Part 1
@@ -32,7 +35,10 @@ candyBars_sub <- candyBars %>%
   select_if(is.numeric)
 #Get co/variance matrix
 candyBars_cov <- cov(candyBars_sub)
-knitr::kable(candyBars_cov, digits=2)
+knitr::kable(candyBars_cov, digits=2) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = TRUE, font_size = 10)
+
 #Get correlation matrix
 candyBars_corr <- cor(candyBars_sub)
 knitr::kable(candyBars_corr, digits=2)
@@ -100,6 +106,8 @@ knitr::kable(candyLoadings, digits=2)
 candyBar_scores <- as.data.frame(candyPCA$x)
 p <- ggplot(data=candyBar_scores, aes(x=PC1, y=PC2,colour=candyBars$Brand)) 
 p + geom_hline(yintercept=0) + geom_vline(xintercept=0) + geom_point()
+
+ggbiplot(candyPCA, groups=candyBars$Brand, varname.size=5)
 ```
 
 The PCA of this dataset unfortunately does not provide an extensive explanation of variance in a small number of components. The first PC explains only 26% of the variance, and the cumulative variance does not reach 90% until the seventh component. For this dataset, I would include the first four components, describing roughly 70% of the variance.
