@@ -121,7 +121,7 @@ Weider has a couple points extentende far negatively along the second component'
 
 ```{r pca cov}
 #by Eigenvalues
-candyBarsEV <- eigen(candyBars_cov)
+candyBarsEV_cov <- eigen(candyBars_cov)
 summary(candyBarsEV$values)
 plot(candyBarsEV$values, type='l')
 
@@ -131,8 +131,8 @@ summary(candyPCA_cov)
 plot(candyPCA_cov, type='l')
 
 #loadings
-candyLoadings <- candyPCA_cov$rotation
-knitr::kable(candyLoadings, digits=2)
+candyLoadings_cov <- candyPCA_cov$rotation
+knitr::kable(candyLoadings_cov, digits=2)
 
 #biplot
 candyBar_cov_scores <- as.data.frame(candyPCA_cov$x)
