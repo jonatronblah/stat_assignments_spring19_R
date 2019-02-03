@@ -5,24 +5,68 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+library(tidyverse)
+candyBars <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment1_R/data/CandyBars.txt')
+library(corrplot)
+library(ggplot2)
+library(ggbiplot)
+library(kableExtra)
+library(nFactors)
+library(FactoMineR)
 ```
 
-## R Markdown
+# Part 1
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Perform a Factor Analysis on this data by carrying out the following steps:
+1) How many factors should be retained (based on eigenvalues and a Scree plot)? You may use
+any “Factoring method” or “Rotation method” you wish. The defaults, of course, are fine.
+2) Provide the rotated factor loadings matrix. You should notice that (as compared with Principal
+Component Analysis) fewer variables load onto each factor. Interpret (as best as possible) your
+factors. Can you give an overall name to each factor?
+3) Plot factor scores for your first two factors. Color the points by Brand. Are there any natural
+groupings of observations?
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r factor}
+#subset numeric variables
+candyBars_sub <- candyBars %>% 
+  select_if(is.numeric)
 
-```{r cars}
-summary(cars)
+ev_candyBars <- eigen(cor(candyBars_sub))
+
+ap <- parallel(subject=nrow(candyBars_sub),var=ncol(candyBars_sub),
+  rep=100,cent=.05)
+nS <- nScree(x=ev_candyBars$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+
+candyfact <- factanal(candyBars_sub, factors = 5)
+
+factorplot <- PCA(candyBars_sub)
+
+plot(candyfact$loadings, col=candyBars$Brand)
+
 ```
 
-## Including Plots
+# Part 2
 
-You can also embed plots, for example:
+1) Perform a linear discriminant analysis using the highlighted variables for discriminating the
+variable Pop_Size_Group.
+2) Show a plot of the two discriminant functions with points colored by Pop_Size_Group. Do
+both discriminant functions appear necessary to describe group separation?
+3) Give the scoring coefficients for the two discriminant functions. Which variables
+appear most important for describing group separation?
+4) Provide a classification matrix and the percent of observations misclassified. 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r disc}
+library(MASS)
+demographics <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment2_R/data/Demographics.txt')
+demdisc <- lda(Pop_Size_Group ~ ., data=demographics, na.action = "na.omit")
+
+#Percent Correct
+demdisc.values <- predict(demdisc,demographics)
+ct <-table(demographics$Pop_Size_Group,demdisc.values$class)
+sum(diag(prop.table(ct)))
+
+plot(demdisc)
+
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
