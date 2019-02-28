@@ -7,24 +7,32 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(forcats)
+library(dendextend)
+trip_data <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment3_R/data/tripadvisor_review.csv')
 ```
 
-## R Markdown
+```{r hierarchical}
+trip_dist <- dist(trip_data[,2:11],method="euclidean")
+trip_hclust <- hclust(trip_dist,method="ward.D")
+plot(trip_hclust, labels = FALSE)
+groups <- cutree(trip_hclust,k=5)
+rect.hclust(trip_hclust,k=5,border="red")
+aggregate(trip_data[,2:11],list(groups),FUN=mean)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+```{r hierarchical dendextend}
+dend <- trip_data[,2:11] %>% 
+  dist %>% 
+  hclust(method="ward.D") %>% 
+  as.dendrogram %>% 
+  set("labels_cex", .01)
+  plot(dend)
+  rect.dendrogram(dend, k=2)
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

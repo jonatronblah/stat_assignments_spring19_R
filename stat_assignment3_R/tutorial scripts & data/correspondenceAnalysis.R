@@ -3,9 +3,10 @@ library(FactoMineR)
 library(graphics)
 
 example <- read_csv("C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment3_R/tutorial scripts & data/CorrespondenceAnalysis.txt")
-cont.table <- xtabs(example$Count ~ example$Eye.Color+example$Hair.Color)
 
-mosaicplot(cont.table,shade=TRUE, las=2)
+cont.table <- xtabs(example$Count ~ example$`Eye Color` +example$`Hair Color`)
+
+mosaicplot(cont.table,shade=TRUE, las=1)
 chisq <- chisq.test(cont.table)
 chisq
 
@@ -14,7 +15,7 @@ summary(ca)
 
 eigenvalues <- get_eigenvalue(ca)
 fviz_screeplot(ca)
-fviz_ca_biplot(ca) #Biplot
+fviz_ca_biplot(ca, arrows=c(TRUE, TRUE)) #Biplot
 
 fviz_contrib(ca,choice="row",axes=1)
 fviz_contrib(ca,choice="col",axes=1)
