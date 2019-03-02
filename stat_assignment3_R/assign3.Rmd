@@ -10,28 +10,110 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(forcats)
 library(dendextend)
-trip_data <- read_csv('C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment3_R/data/tripadvisor_review.csv')
-```
-
-```{r hierarchical}
-trip_dist <- dist(trip_data[,2:11],method="euclidean")
-trip_hclust <- hclust(trip_dist,method="ward.D")
-plot(trip_hclust, labels = FALSE)
-groups <- cutree(trip_hclust,k=5)
-rect.hclust(trip_hclust,k=5,border="red")
-aggregate(trip_data[,2:11],list(groups),FUN=mean)
+library(factoextra)
+library(FactoMineR)
+library(graphics)
+trip_data <- read_csv("C:\\Users\\jonathan\\Desktop\\DAPT Docs\\spring 2019\\Statistics\\stat_assignments_spring19_R\\stat_assignment3_R\\data\\tripadvisor_review.csv")
+adult_data <- read_csv("C:\\Users\\jonathan\\Desktop\\DAPT Docs\\spring 2019\\Statistics\\stat_assignments_spring19_R\\stat_assignment3_R\\data\\adult.data.txt")
 
 ```
+
 
 ```{r hierarchical dendextend}
 dend <- trip_data[,2:11] %>% 
   dist %>% 
   hclust(method="ward.D") %>% 
   as.dendrogram %>% 
-  set("labels_cex", .01)
+  set("labels_cex", .01) %>% 
+  set("branches_k_color", k = 5)
   plot(dend)
-  rect.dendrogram(dend, k=2)
+  #rect.dendrogram(dend, k=2)
 
+groups <- cutree(dend,k=5)
+aggregate(trip_data[,2:11],list(groups),FUN=mean)
+
+
+```
+
+
+```{r two way}
+trip_mtx <- as.matrix(trip_data[,2:11])
+rownames(trip_mtx) <- trip_data$`User ID`
+trip_scaled <- scale(trip_mtx)
+heatmap(trip_scaled)
+
+```
+
+```{r k means}
+
+fviz_nbclust(trip_data[,2:11],kmeans,method="gap_stat")
+trip_kmeans <- kmeans(trip_data[,2:11],4)
+aggregate(trip_mtx,by=list(trip_kmeans$cluster),FUN=mean)
+new.data <- data.frame(trip_data, trip_kmeans$cluster)
+fviz_cluster(trip_kmeans,data=trip_data[,2:11])
+
+```
+
+
+```{r adult factor levels}
+adult_data <- adult_data %>% mutate_if(is.character, as.factor)
+adult_data$WorkClass <- fct_collapse(adult_data$WorkClass,
+                          Government = c("Federal-gov", "Local-gov", "State-gov"),
+                          Private = "Private",
+                          Self_employed = c("Self-emp-inc", "Self-emp-not-inc"),
+                          Unemployed = c("Never-worked", "Without-pay"),
+                          Unknown = "?"
+                          )
+
+adult_data$education <- fct_collapse(adult_data$education,
+                          less_than_HS = c("10th", "11th", "12th", "1st-4th", "5th-6th", "7th-8th", "9th", "Preschool"),
+                          HS = "HS-grad",
+                          associates = c("Assoc-acdm", "Assoc-voc"),
+                          bachelors = "Bachelors",
+                          Some_college = "Some-college",
+                          post_bachelors = c("Doctorate", "Masters", "Prof-school")
+                          )
+
+adult_data$`native-country` <- fct_collapse(adult_data$`native-country`,
+                          US = "United-States",
+                          unknown = "?",
+                          other = nation_list
+                          )
+```
+
+
+```{r chisq}
+cont_table_adult <- xtabs(adult_work_ed_counts$no ~ adult_work_ed_counts$WorkClass + adult_work_ed_counts$education)
+
+mosaicplot(cont_table_adult,shade=TRUE, las=1)
+chisq <- chisq.test(cont_table_adult)
+chisq
+
+```
+
+```{r corr}
+ca_adult <- CA(cont_table_adult,graph=FALSE) #correspondence analysis
+summary(ca_adult)
+
+eigenvalues <- get_eigenvalue(ca_adult)
+fviz_screeplot(ca_adult)
+fviz_ca_biplot(ca_adult, arrows=c(TRUE, TRUE)) #Biplot
+
+fviz_contrib(ca_adult,choice="row",axes=1)
+fviz_contrib(ca_adult,choice="col",axes=1)
+
+
+```
+
+
+```{r multi corr}
+adult_factors <- adult_data %>% select_if(is.factor)
+mca_adult <- MCA(adult_factors[],graph=FALSE)
+summary(mca_adult)
+
+fviz_screeplot(mca_adult,addlabels=TRUE)
+fviz_mca_biplot(mca_adult)
+fviz_mca_var(mca_adult)
 
 
 ```

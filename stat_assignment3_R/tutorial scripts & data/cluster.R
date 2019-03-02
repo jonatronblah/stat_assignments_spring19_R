@@ -1,5 +1,5 @@
 #Cluster Analysis
-
+library(tidyverse)
 #Read in data
 college.data <- read_csv("C:/Users/jonathan/Desktop/DAPT Docs/spring 2019/Statistics/stat_assignments_spring19_R/stat_assignment3_R/tutorial scripts & data/CollUniv.txt")
 college.data$AccRate <- as.numeric(sub("%","",college.data$AccRate))
