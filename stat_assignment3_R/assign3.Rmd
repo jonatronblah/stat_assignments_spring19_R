@@ -57,6 +57,10 @@ fviz_cluster(trip_kmeans,data=trip_data[,2:11])
 
 ```{r adult factor levels}
 adult_data <- adult_data %>% mutate_if(is.character, as.factor)
+nation_list <- c(levels(adult_data$`native-country`))
+nation_list <- nation_list[-40]
+nation_list <- nation_list[-1]
+nation_list <- nation_list
 adult_data$WorkClass <- fct_collapse(adult_data$WorkClass,
                           Government = c("Federal-gov", "Local-gov", "State-gov"),
                           Private = "Private",
@@ -83,7 +87,8 @@ adult_data$`native-country` <- fct_collapse(adult_data$`native-country`,
 
 
 ```{r chisq}
-cont_table_adult <- xtabs(adult_work_ed_counts$no ~ adult_work_ed_counts$WorkClass + adult_work_ed_counts$education)
+adult_work_ed_counts <- adult_data %>% group_by(WorkClass, education) %>% summarize(n=n())
+cont_table_adult <- xtabs(adult_work_ed_counts$n ~ adult_work_ed_counts$WorkClass + adult_work_ed_counts$education)
 
 mosaicplot(cont_table_adult,shade=TRUE, las=1)
 chisq <- chisq.test(cont_table_adult)
