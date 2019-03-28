@@ -1,0 +1,42 @@
+---
+title: "Stats Assignment 4"
+author: "Jonathan Scheer"
+date: "March 27, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+1. a)
+```{r display}
+pdisp <- read_csv("C:\\Users\\jonathan\\Desktop\\DAPT Docs\\spring 2019\\Statistics\\stat_assignments_spring19_R\\stat_assignment4_R\\data\\ProductDisplay.txt")
+
+pdispmod <- lm(`Units Sold`~StoreSize*DisplayType*PackageType, data=pdisp)
+summary(pdispmod)
+
+```
+The most statistically significant effect is from using a shelf as the display type (rather than the end of aisle). The small store size was also significant, as was the plastic package type and the interaction between small store size and the shelf display type (which seems to make sense, as these two effects separately had the lowest p values).
+
+Small store size and shelf display type seem to be associated with lower sales, but strangely the interaction between the two is estimated to be associated with an a sales increase. 
+
+b)
+```{r assumptions}
+plot(pdispmod,which=1)
+plot(pdispmod,which=2)
+```
+
+
+c)
+```{r interaction}
+interaction.plot(pdisp$StoreSize,pdisp$DisplayType,pdisp$`Units Sold`, type="b",pch=c(18,24))
+
+
+
+```
+The effect of a small store size is different for display type - it leads to increased sales for items on the shelf, and decreased sales for items at the end of the aisle.
+
+
+d) Generally, the supermarket chain should aim to put the new product at the end of the aisle in their large stores and put it on the shelf in their smaller stores. They should use the plastic packaging in both.

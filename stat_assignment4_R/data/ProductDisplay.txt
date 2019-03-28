@@ -1,0 +1,17 @@
+StoreSize,DisplayType,PackageType,Units Sold
+Small,Shelf,Paper,57
+Large,Shelf,Paper,43
+Small,Aisle End,Paper,50
+Large,Aisle End,Paper,77
+Small,Shelf,Plastic,49
+Large,Shelf,Plastic,51
+Small,Aisle End,Plastic,66
+Large,Aisle End,Plastic,95
+Small,Shelf,Paper,46
+Large,Shelf,Paper,46
+Small,Aisle End,Paper,62
+Large,Aisle End,Paper,79
+Small,Shelf,Plastic,59
+Large,Shelf,Plastic,55
+Small,Aisle End,Plastic,69
+Large,Aisle End,Plastic,98
