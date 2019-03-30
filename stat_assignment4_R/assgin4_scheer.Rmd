@@ -8,11 +8,15 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(daewr)
+pdisp <- read_csv("data\\ProductDisplay.txt")
+paper <- read_csv("data\\Paper.txt")
+marketing <- read_csv("data\\DirectMarketing.txt")
 ```
 
 1. a)
-```{r display}
-pdisp <- read_csv("C:\\Users\\jonathan\\Desktop\\DAPT Docs\\spring 2019\\Statistics\\stat_assignments_spring19_R\\stat_assignment4_R\\data\\ProductDisplay.txt")
+```{r display effects}
+
 
 pdispmod <- lm(`Units Sold`~StoreSize*DisplayType*PackageType, data=pdisp)
 summary(pdispmod)
@@ -23,14 +27,14 @@ The most statistically significant effect is from using a shelf as the display t
 Small store size and shelf display type seem to be associated with lower sales, but strangely the interaction between the two is estimated to be associated with an a sales increase. 
 
 b)
-```{r assumptions}
+```{r display assumptions}
 plot(pdispmod,which=1)
 plot(pdispmod,which=2)
 ```
 
 
 c)
-```{r interaction}
+```{r display interaction}
 interaction.plot(pdisp$StoreSize,pdisp$DisplayType,pdisp$`Units Sold`, type="b",pch=c(18,24))
 
 
@@ -40,3 +44,64 @@ The effect of a small store size is different for display type - it leads to inc
 
 
 d) Generally, the supermarket chain should aim to put the new product at the end of the aisle in their large stores and put it on the shelf in their smaller stores. They should use the plastic packaging in both.
+
+2. a)
+```{r paper ANOVA}
+paperanova <- aov(Strength ~ Hardwood*Pressure*`Cooking Time`, data=paper)
+summary(paperanova)
+papermod <- lm(Strength~Hardwood*Pressure*`Cooking Time`, data=paper)
+summary(papdermod)
+
+```
+Cooking Time, Hardwood concentration and Pressure appear to be independently significant in this experiment. None of their interactions are significant using an alpha of 0.5.
+
+b)
+```{r paper assumptions}
+plot(papermod,which=1)
+plot(papermod,which=2)
+```
+
+c)
+```{r paper interaction}
+interaction.plot(paper$Hardwood,paper$Pressure,paper$Strength, type="b",pch=c(18,24))
+
+
+
+```
+While none of the interactions in this experiment were deemed significant in the ANOVA test, the *most* significant one was between Hardwood concentration and Pressure.
+
+Using a Hardwood concentration of 4 provided the best overall strength when using pressure level of 400 (pounds per square inch?) - for this pressure level, the hardwood concentration of 2 provided the lowest strength, while a concentration of 8 provided a strength in between that of the other two concentration levels.
+
+For the other two pressure levels, hardwood concentration appears to be correlated negatively with strength.
+
+It is worth noting that the differences between concentration levels of 2 and 4 appear to be more significant than that between 4 and 8.
+
+d)
+I would recommend further experimentation before attempting to optimize this process. Hardwood concentration, pressure and cooking time all appear to independently increase the strength of the paper, but the interaction between hardwood concentration and pressure is potentially negative - however, the ANOVA test did not appear to pass this interaction as statistically significant. If it is economical, additional experimentation may determine if this weak interaction has significant effects on production.
+
+
+3. a-c)
+```{r marketing effects}
+
+
+markmod <- lm(`Response Rate`~A*B*C*D, data=marketing)
+summary(markmod)
+
+
+par(mfrow=c(1,1))
+LGB(coef(markmod)[-1],rpt=TRUE)
+
+markmod.reduced <- lm(`Response Rate`~A + B + C + D, data=marketing)
+summary(markmod.reduced)
+plot(markmod.reduced,which=1)
+plot(markmod.reduced,which=2)
+```
+In order to properly test the significance of the effects in this saturated model, a half normal plot was used to determine which to keep in a reduced model. In doing so, the interactions were dropped.
+
+Each individual factor appears to be statistically significant regarding their effect on the response rate, but the assumptions of the reduced model do not seem to be completely satisfactory - there is a noticable curve to the residuals vs. fitted plot as well as the Q-Q plot.
+
+d)
+There were not significant interaction effects in this experiment.
+
+e)
+Given the statistical output above, it appears that the company in question may maximize their response rate by using the 2nd level of each factor - that is, applying annual payment terms, offering a premium, offering a sweepstakes and including a plastic trial membership card. As the interactions are not significant, they may freely use all of these levels combined without fear of negative interactions.
