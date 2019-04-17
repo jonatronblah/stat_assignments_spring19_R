@@ -1,0 +1,45 @@
+---
+title: "Assignment 5"
+author: "Jonathan Scheer"
+date: "April 16, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(CCA)
+library(ggplot2)
+library(GGally)
+library(tidyverse)
+hbat <- read_csv("C:\\Users\\jonathan\\Desktop\\DAPT Docs\\spring 2019\\Statistics\\stat_assignments_spring19_R\\stat_assignment5_R\\data\\HBAT_200.txt")
+
+```
+
+```{r cancor analysis}
+#format data
+hbat <- hbat %>%
+  mutate(`X23 - Consider Strategic Alliance` = case_when(`X23 - Consider Strategic Alliance` == "No, would not consider" ~ 0, `X23 - Consider Strategic Alliance` == "Yes, would consider" ~ 1),
+         
+         `X6 - Product Quality` = case_when(`X6 - Product Quality` == "Excellent" ~ 10, TRUE ~ as.numeric(`X6 - Product Quality`)),  
+         `X13 - Competitive Pricing` = case_when(`X13 - Competitive Pricing` == "Excellent" ~ 10, TRUE ~ as.numeric(`X13 - Competitive Pricing`)))
+
+
+#group variables as matrices
+X <- as.matrix(cbind(hbat[,7:19]))
+Y <- as.matrix(cbind(hbat[,20:23]))
+#bivariate correlation plots
+correl <- matcor(X,Y)
+img.matcor(correl,type=2)
+ggpairs(hbat[,7:23], progress = FALSE)
+#CCA
+hbat.cca <- cc(X,Y)
+barplot(hbat.cca$cor, xlab="Dimension", ylab="Canonical Correlations")
+plt.cc(hbat.cca, var.label=TRUE)
+#standardized coefficients
+s1 <- diag(sqrt(diag(cov(X))))
+s1 %*% hbat.cca$xcoef
+
+s2 <- diag(sqrt(diag(cov(Y))))
+s2 %*% hbat.cca$ycoef
+
+```

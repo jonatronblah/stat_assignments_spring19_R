@@ -50,15 +50,15 @@ d) Generally, the supermarket chain should aim to put the new product at the end
 paperanova <- aov(Strength ~ Hardwood*Pressure*`Cooking Time`, data=paper)
 summary(paperanova)
 papermod <- lm(Strength~Hardwood*Pressure*`Cooking Time`, data=paper)
-summary(papdermod)
+summary(papermod)
 
 ```
 Cooking Time, Hardwood concentration and Pressure appear to be independently significant in this experiment. None of their interactions are significant using an alpha of 0.5.
 
 b)
 ```{r paper assumptions}
-plot(papermod,which=1)
-plot(papermod,which=2)
+plot(paperanova,which=1)
+plot(paperanova,which=2)
 ```
 
 c)
