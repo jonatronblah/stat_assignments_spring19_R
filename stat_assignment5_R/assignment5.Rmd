@@ -12,6 +12,7 @@ library(ggplot2)
 library(GGally)
 library(tidyverse)
 hbat <- read_csv("C:\\Users\\jonathan\\Desktop\\DAPT Docs\\spring 2019\\Statistics\\stat_assignments_spring19_R\\stat_assignment5_R\\data\\HBAT_200.txt")
+student <- read_csv("C:\\Users\\jonathan\\Desktop\\DAPT Docs\\spring 2019\\Statistics\\stat_assignments_spring19_R\\stat_assignment5_R\\data\\student.txt")
 
 ```
 
@@ -41,5 +42,13 @@ s1 %*% hbat.cca$xcoef
 
 s2 <- diag(sqrt(diag(cov(Y))))
 s2 %*% hbat.cca$ycoef
+
+```
+
+```{r minova}
+student <- student %>% mutate_at(vars(-G1, -G2, -G3),funs(factor))
+
+myMANOVA <- manova(cbind(G1, G2, G3) ~ ., data = student)
+summary(myMANOVA, test="Pillai")
 
 ```

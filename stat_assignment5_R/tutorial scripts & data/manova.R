@@ -54,23 +54,24 @@ interaction.plot(HBAT$X5...Distribution.System,HBAT$X1...Customer.Type,HBAT$X21.
 ########################################################################################
 #Multivariate Regression
 
-HBATreduced <- HBAT[,-which(names(HBAT) %in% c("ID","X22...Purchase.Level","X23...Consider.Strategic.Alliance"))]
-model <- manova(cbind(X19...Satisfaction,X20...Likely.to.Recommend,X21...Likely.to.Purchase)~.,data=HBATreduced)
+HBATreduced <- HBAT[,-which(names(HBAT) %in% c("ID","X22 - Purchase Level","X23 - Consider Strategic Alliance"))]
+model <- manova(cbind(`X19 - Satisfaction`,`X20 - Likely to Recommend`,`X21 - Likely to Purchase`)~.,data=HBATreduced)
 summary(model)
 
 #What's wrong here? Can you tell based on degrees of freedom? 
 library(dplyr)
 HBATreduced <- HBATreduced %>%
-                  filter(X6...Product.Quality!="Excellent") %>%
-                  filter(X13...Competitive.Pricing!="Excellent")
+                  filter(`X6 - Product Quality`!="Excellent") %>%
+                  filter(`X13 - Competitive Pricing`!="Excellent")
 
-HBATreduced$X6...Product.Quality <- as.numeric(as.character(HBATreduced$X6...Product.Quality))
-HBATreduced$X13...Competitive.Pricing <- as.numeric(as.character(HBATreduced$X13...Competitive.Pricing))
+HBATreduced$`X6 - Product Quality` <- as.numeric(as.character(HBATreduced$`X6 - Product Quality`))
+HBATreduced$`X13 - Competitive Pricing` <- as.numeric(as.character(HBATreduced$`X13 - Competitive Pricing`))
 
-model <- manova(cbind(X19...Satisfaction,X20...Likely.to.Recommend,X21...Likely.to.Purchase)~.,data=HBATreduced)
+model <- manova(cbind(`X19 - Satisfaction`,`X20 - Likely to Recommend`,`X21 - Likely to Purchase`)~.,data=HBATreduced)
 summary(model)
 
 summary.aov(model)
 
-HBATreg <- HBATreduced[,-which(names(HBATreduced) %in% c("X14...Warranty...Claims","X15...New.Products","X16...Order...Billing","X17...Price.Flexibility","X18...Delivery.Speed"))]
-regmodel <- lm(cbind(X19...Satisfaction,X20...Likely.to.Recommend,X21...Likely.to.Purchase)~.,data=HBATreg)
+HBATreg <- HBATreduced[,-which(names(HBATreduced) %in% c("X14 - Warranty & Claims","X15 - New Products","X16 - Order & Billing","X17 - Price Flexibility","X18 - Delivery Speed"))]
+regmodel <- lm(cbind(`X19 - Satisfaction`,`X20 - Likely to Recommend`,`X21 - Likely to Purchase`)~.,data=HBATreg)
+summary(regmodel)
